@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 const { Client } = require('pg');
 const path = require('path');
 
@@ -20,7 +19,10 @@ const client = new Client({
   port: process.env.DB_PORT || 5432,
 });
 
-client.connect();
+client.connect()
+  .then(() => console.log('Connected to PostgreSQL database'))
+  .catch(error => console.error('Error connecting to PostgreSQL database:', error));
+
 
 // EJS Setup
 app.set('view engine', 'ejs');
@@ -29,56 +31,36 @@ app.set('views', path.join(__dirname, 'views'));
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// CRUD Operations (your existing CRUD operations)
+// GET all books
 app.get('/books', async (req, res) => {
   try {
-    // Fetch data from your database
-    const dbResult = await client.query('SELECT * FROM books');
-
-    // Fetch data from the Open Library Covers API (using the .json endpoint)
-    const apiDataPromises = dbResult.rows.map(async (book) => {
-      const isbn = book.isbn; // Assuming you have an 'isbn' column in your database
-      const coverResponse = await axios.get(`https://covers.openlibrary.org/b/isbn/${isbn}.json`);
-      return {
-        bookId: book.book_id, // Assuming you have a 'book_id' column in your database
-        coverUrl: coverResponse.data.large ? coverResponse.data.large : null,
-        title: coverResponse.data.title,
-        author: coverResponse.data.author_name ? coverResponse.data.author_name.join(', ') : 'Unknown Author',
-        // Add more relevant information based on the coverResponse data
-      };
-    });
-
-    const apiData = await Promise.all(apiDataPromises);
+    // Fetch data from the database
+    const { rows: dbData } = await client.query('SELECT * FROM books');
 
     // Render the EJS template with data
-    res.render('books', { dbData: dbResult.rows, apiData });
-
+    res.render('books', { dbData });
   } catch (error) {
     console.error('Error fetching data:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-// API Integration - GET endpoint for book covers
-app.get('/api/book-covers/:isbn', async (req, res) => {
-  const isbn = req.params.isbn;
-
+// POST a new book with title and author only
+app.post('/api/books', async (req, res) => {
+    console.log('Received data:', req.body);
+    const { title, author } = req.body;
   try {
-    // Make a GET request to the Open Library Covers API
-    const response = await axios.get(`https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg`);
-
-    // Send the image data as a response
-    res.set('Content-Type', 'image/jpeg');
-    res.send(response.data);
+    await client.query('INSERT INTO books (title, author) VALUES ($1, $2)', [title, author]);
+    res.status(201).send('Book added successfully');
   } catch (error) {
-    console.error('Error fetching book cover:', error);
+    console.error('Error adding book:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
 // Route for the root URL
 app.get('/', (req, res) => {
-  res.render('index'); // Assuming you want to render the index.ejs file
+  res.render('index.ejs'); // Assuming you want to render the index.ejs file
 });
 
 // Start the server

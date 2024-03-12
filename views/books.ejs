@@ -1,28 +1,36 @@
-<!-- books.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
-    <title>Book Notes Platform</title>
+    <title>Book C Notes Platform</title>
   </head>
   <body>
-    <h1>Welcome to the Book Notes A Platform</h1>
+    <h1>Welcome to see how many books have you read so far</h1>
+
+    <!-- Form for adding books -->
+    <form action="/api/books" method="post">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required />
+
+      <label for="author">Author:</label>
+      <input type="text" id="author" name="author" required />
+
+      <!-- Hidden input fields for publication date, ISBN, and user ID -->
+      <input
+        type="hidden"
+        id="publication_date"
+        name="publication_date"
+        value="<%= new Date().toISOString().split('T')[0] %>"
+      />
+      <input type="hidden" id="isbn" name="isbn" value="<%= '1234567890' %>" />
+      <input type="hidden" id="user_id" name="user_id" value="<%= 1 %>" />
+
+      <button type="submit">Add Book</button>
+    </form>
 
     <!-- Display book covers and information here -->
-    <div class="books-container">
-      <% for (const book of booksData) { %>
-      <div class="book">
-        <img src="<%= book.coverUrl %>" alt="<%= book.title %> Cover" />
-        <h2><%= book.title %></h2>
-        <p>Author: <%= book.author %></p>
-        <p>Publication Date: <%= book.publication_date %></p>
-        <!-- Add more information as needed -->
-      </div>
-      <% } %>
-    </div>
 
     <script src="/js/main.js"></script>
   </body>
