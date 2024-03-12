@@ -1,0 +1,29 @@
+<!-- books.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <title>Book Notes Platform</title>
+  </head>
+  <body>
+    <h1>Welcome to the Book Notes A Platform</h1>
+
+    <!-- Display book covers and information here -->
+    <div class="books-container">
+      <% for (const book of booksData) { %>
+      <div class="book">
+        <img src="<%= book.coverUrl %>" alt="<%= book.title %> Cover" />
+        <h2><%= book.title %></h2>
+        <p>Author: <%= book.author %></p>
+        <p>Publication Date: <%= book.publication_date %></p>
+        <!-- Add more information as needed -->
+      </div>
+      <% } %>
+    </div>
+
+    <script src="/js/main.js"></script>
+  </body>
+</html>
