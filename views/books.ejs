@@ -10,7 +10,7 @@
     <h1>Welcome to see how many books have you read so far</h1>
 
     <!-- Form for adding books -->
-    <form action="/api/books" method="post">
+    <form action="/books" method="post">
       <label for="title">Title:</label>
       <input type="text" id="title" name="title" required />
 
@@ -29,8 +29,16 @@
 
       <button type="submit">Add Book</button>
     </form>
-
-    <!-- Display book covers and information here -->
+    <!-- views/books.ejs -->
+    <!-- books.ejs -->
+    <h2>List of Books You Have Read:</h2>
+    <ul>
+      <% if ( dbData.length > 0) { %> <% dbData.forEach(book => { %>
+      <li><%= book.title %> by <%= book.author %></li>
+      <% }); %> <% } else { %>
+      <li>No books found</li>
+      <% } %>
+    </ul>
 
     <script src="/js/main.js"></script>
   </body>
