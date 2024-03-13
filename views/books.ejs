@@ -7,10 +7,10 @@
     <title>Book C Notes Platform</title>
   </head>
   <body>
-    <h1>Welcome to see how many books have you read so far</h1>
+    <h1>Your List Book</h1>
 
     <!-- Form for adding books -->
-    <form action="/books" method="post">
+    <form class="book-card" action="/books" method="post">
       <label for="title">Title:</label>
       <input type="text" id="title" name="title" required />
 
@@ -33,9 +33,9 @@
     <!-- views/books.ejs -->
     <!-- books.ejs -->
     <h2>List of Books You Have Read:</h2>
-    <ul>
+    <ul class="book-list">
       <% if ( dbData.length > 0) { %> <% dbData.forEach(book => { %>
-      <li><%= book.title %> written by <%= book.author %></li>
+      <li>Book: <%= book.title %> written by: <%= book.author %></li>
       <% }); %> <% } else { %>
       <li>No books found</li>
       <% } %>

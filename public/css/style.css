@@ -1,28 +1,55 @@
-/* style.css */
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(250, 228, 200);
 }
 
 h1 {
-  color: #333;
+  color: rgb(195, 175, 150); 
+  text-align: center;
+  margin: 20px 0;
 }
 
-.book-container {
-  display: flex;
-  flex-wrap: wrap;
+h2 {
+  color: rgb(170, 159, 144);
+  text-align: center;
+  margin: 20px auto;
 }
 
 .book-card {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px;
-  width: 200px;
+  border: 3px solid rgb(236, 223, 207);
+  padding: 20px;
+  margin: 40px auto;
+  width: 500px;
   text-align: center;
+  border-radius: 40px;
+  background-color: rgb(243, 204, 156);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  /* Add flexbox properties */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Align children vertically */
+  align-items: center; /* Align children horizontally */
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+
+.book-list {
+  list-style-type: decimal; /* Use numerals for list items */
+  color: rgb(146, 120, 90);
+  font-weight: 500;
+  font-size: 33px;
+  line-height: 1.5;
+  margin: 20px auto; /* Center the book list horizontally */
+  max-width: 800px; /* Limit the width of the book list */
+  padding: 0 20px; /* Add some padding to the sides */
 }
