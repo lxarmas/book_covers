@@ -42,18 +42,7 @@ app.get('/', async (req, res) => {
   }
 });
 
-// POST a new book with title and author only
-app.post('/api/books', async (req, res) => {
-    console.log('Received data:', req.body);
-    const { title, author } = req.body;
-  try {
-    await client.query('INSERT INTO books (title, author) VALUES ($1, $2)', [title, author]);
-    res.status(201).send('Book added successfully');
-  } catch (error) {
-    console.error('Error adding book:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+
 
 // POST a new book with title and author only
 app.post('/books', async (req, res) => {
@@ -67,6 +56,7 @@ app.post('/books', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 // Start the server
 app.listen(port, () => {
