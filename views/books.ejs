@@ -35,7 +35,7 @@
     <h2>List of Books You Have Read:</h2>
     <ul>
       <% if ( dbData.length > 0) { %> <% dbData.forEach(book => { %>
-      <li><%= book.title %> by <%= book.author %></li>
+      <li><%= book.title %> written by <%= book.author %></li>
       <% }); %> <% } else { %>
       <li>No books found</li>
       <% } %>
