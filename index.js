@@ -62,6 +62,23 @@ app.post('/books', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+// DELETE a book by ID
+app.delete('/books/:id', async (req, res) => {
+    const bookId = req.params.id;
+    try {
+        // Delete the book from the database
+        await client.query('DELETE FROM books WHERE id = $1', [bookId]);
+
+        // Fetch the updated list of books from the database
+        const { rows: dbData } = await client.query('SELECT * FROM books');
+
+        // Respond with the updated list of books
+        res.status(200).json({ success: true, message: 'Book deleted successfully', data: dbData });
+    } catch (error) {
+        console.error('Error deleting book:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 
 // Start the server

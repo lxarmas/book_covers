@@ -1,3 +1,4 @@
+<!-- views/book.ejs -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,12 +31,21 @@
       <button type="submit">Add Book</button>
     </form>
 
-    <!-- views/books.ejs -->
-    <!-- books.ejs -->
+    <!-- List of Books -->
     <h2>List of Books You Have Read:</h2>
     <ul class="book-list">
-      <% if ( dbData.length > 0) { %> <% dbData.forEach(book => { %>
-      <li>Book: <%= book.title %> written by: <%= book.author %></li>
+      <% if (dbData.length > 0) { %> <% dbData.forEach(book => { %>
+      <li>
+        Book: <%= book.title %> written by: <%= book.author %>
+        <form
+          action="/books/<%= book.id %>"
+          method="post"
+          style="display: inline;"
+        >
+          <input type="hidden" name="_method" value="delete" />
+          <button type="submit">Delete</button>
+        </form>
+      </li>
       <% }); %> <% } else { %>
       <li>No books found</li>
       <% } %>
