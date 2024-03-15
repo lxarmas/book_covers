@@ -23,7 +23,6 @@ client.connect()
   .then(() => console.log('Connected to PostgreSQL database'))
   .catch(error => console.error('Error connecting to PostgreSQL database:', error));
 
-
 // EJS Setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -37,12 +36,9 @@ app.get('/', async (req, res) => {
     const dbData = await fetchDataFromDatabase();
     res.render('index', { dbData });
   } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    handleError(res, error);
   }
 });
-
-
 
 // POST a new book with title and author only
 app.post('/books', async (req, res) => {
@@ -53,33 +49,31 @@ app.post('/books', async (req, res) => {
         await client.query('INSERT INTO books (title, author) VALUES ($1, $2)', [title, author]);
         
         // Fetch the updated list of books from the database
-        const { rows: dbData } = await client.query('SELECT * FROM books');
-        
+        const dbData = await fetchDataFromDatabase();
+
         // Respond with the updated list of books
         res.status(201).render('index', { dbData });
     } catch (error) {
-        console.error('Error adding book:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        handleError(res, error);
     }
 });
+
 // DELETE a book by ID
 app.delete('/books/:id', async (req, res) => {
-    const bookId = req.params.id;
+    const bookId = req.params.book_id;
     try {
         // Delete the book from the database
-        await client.query('DELETE FROM books WHERE id = $1', [bookId]);
+        await client.query('DELETE FROM books WHERE book_id = $1', [bookId]);
 
         // Fetch the updated list of books from the database
-        const { rows: dbData } = await client.query('SELECT * FROM books');
+        const dbData = await fetchDataFromDatabase();
 
         // Respond with the updated list of books
         res.status(200).json({ success: true, message: 'Book deleted successfully', data: dbData });
     } catch (error) {
-        console.error('Error deleting book:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        handleError(res, error);
     }
 });
-
 
 // Start the server
 app.listen(port, () => {
@@ -87,10 +81,11 @@ app.listen(port, () => {
 });
 
 async function fetchDataFromDatabase() {
-  try {
-    const { rows: dbData } = await client.query('SELECT * FROM books');
-    return dbData;
-  } catch (error) {
-    throw new Error('Error fetching data from database: ' + error.message);
-  }
+  const { rows: dbData } = await client.query('SELECT * FROM books');
+  return dbData;
+}
+
+function handleError(res, error) {
+  console.error('Error:', error);
+  res.status(500).json({ error: 'Internal Server Error' });
 }
