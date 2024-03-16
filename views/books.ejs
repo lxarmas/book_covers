@@ -19,14 +19,6 @@
       <input type="text" id="author" name="author" required />
 
       <!-- Hidden input fields for publication date, ISBN, and user ID -->
-      <input
-        type="hidden"
-        id="publication_date"
-        name="publication_date"
-        value="<%= new Date().toISOString().split('T')[0] %>"
-      />
-      <input type="hidden" id="isbn" name="isbn" value="<%= '1234567890' %>" />
-      <input type="hidden" id="user_id" name="user_id" value="<%= 1 %>" />
 
       <button type="submit">Add Book</button>
     </form>

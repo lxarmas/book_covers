@@ -59,11 +59,11 @@ app.post('/books', async (req, res) => {
 });
 
 // DELETE a book by ID
-app.delete('/books/:id', async (req, res) => {
+app.delete('/books/:book_id', async (req, res) => {
     const bookId = req.params.book_id;
     try {
         // Delete the book from the database
-        await client.query('DELETE FROM books WHERE book_id = $1', [bookId]);
+        await client.query('DELETE FROM books ');
 
         // Fetch the updated list of books from the database
         const dbData = await fetchDataFromDatabase();
