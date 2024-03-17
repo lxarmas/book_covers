@@ -43,7 +43,7 @@ h2 {
   background-image: url('/images/old_library.webp'); /* Specify the path to your WebP image */
   background-size: cover;
   background-position: center;
-  opacity: 1; /* Adjust opacity as needed */
+  opacity: 0.8; /* Adjust opacity as needed */
 }
 
 

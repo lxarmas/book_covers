@@ -41,12 +41,13 @@ app.get('/', async (req, res) => {
 });
 
 // POST a new book with title and author only
+// POST a new book with title, author, and ISBN
 app.post('/books', async (req, res) => {
     console.log('Received data:', req.body);
-    const { title, author } = req.body;
+    const { title, author, isbn } = req.body; // Assuming you're collecting ISBN from the user
     try {
         // Insert the new book into the database
-        await client.query('INSERT INTO books (title, author) VALUES ($1, $2)', [title, author]);
+        await client.query('INSERT INTO books (title, author, isbn) VALUES ($1, $2, $3)', [title, author, isbn]);
         
         // Fetch the updated list of books from the database
         const dbData = await fetchDataFromDatabase();
@@ -57,6 +58,7 @@ app.post('/books', async (req, res) => {
         handleError(res, error);
     }
 });
+
 
 // DELETE a book by ID
 // DELETE a book by ID

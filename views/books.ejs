@@ -1,4 +1,3 @@
-<!-- views/book.ejs -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,7 +29,14 @@
       <li>
         <span class="book-title book-data">Book Title:</span> <%= book.title %>
         <span class="author book-data">Author:</span> <%= book.author %>
-        <!-- New code for the delete button -->
+
+        <!-- Display book cover image -->
+        <img
+          src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg"
+          alt="Book Cover"
+        />
+
+        <!-- Form for deleting the book -->
         <form
           id="deleteForm_<%= book.book_id %>"
           action="/books/<%= book.book_id %>"
