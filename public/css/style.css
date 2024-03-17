@@ -6,6 +6,7 @@
 }
 
 body {
+  text-transform: uppercase;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -13,7 +14,7 @@ body {
 }
 
 h1 {
-  color: rgb(195, 175, 150); 
+  color: rgb(0, 0, 0); 
   text-align: center;
   margin: 20px 0;
 }
@@ -23,7 +24,29 @@ h2 {
   text-align: center;
   margin: 20px auto;
 }
-/* style.css */
+/* HEADER */
+
+
+.header {
+  position: relative;
+  height: 150px; /* Adjust height as needed */
+  text-align: center;
+}
+
+
+.header-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/old_library.webp'); /* Specify the path to your WebP image */
+  background-size: cover;
+  background-position: center;
+  opacity: 1; /* Adjust opacity as needed */
+}
+
+
 
 .book-title {
   
@@ -77,7 +100,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: rgb(243, 204, 156); /* Change background color on hover */
+background-color: rgb(105, 178, 140); /* Change background color on hover */
 }
 
 .book-list {
