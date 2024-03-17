@@ -19,13 +19,14 @@ h1 {
 }
 
 h2 {
-  color: rgb(170, 159, 144);
+  color: rgb(111, 105, 95);
   text-align: center;
   margin: 20px auto;
 }
 /* style.css */
 
 .book-title {
+  
   color: rgb(1, 85, 25); /* Change the color as desired */
 }
 
@@ -34,17 +35,15 @@ h2 {
 }
 
 
-
-
 .book-card {
   border: 3px solid rgb(236, 223, 207);
-  padding: 20px;
-  margin: 40px auto;
-  width: 500px;
+  padding: 40px; /* Increased padding for more space */
+  margin: 60px auto; /* Increased margin for better centering */
+  width: 600px; /* Increased width for more space */
   text-align: center;
-  border-radius: 40px;
+  border-radius: 50px; /* Increased border radius for a more rounded appearance */
   background-color: rgb(243, 204, 156);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increased shadow for depth effect */
   transition: transform 0.3s ease;
 
   /* Add flexbox properties */
@@ -54,6 +53,32 @@ h2 {
   align-items: center; /* Align children horizontally */
 }
 
+
+/* Styling for input fields */
+input[type="text"] {
+  padding: 10px; /* Add padding to the input fields */
+  margin: 10px 0; /* Add margin to create space between input fields */
+  border: 2px solid rgb(236, 223, 207); /* Add border to the input fields */
+  border-radius: 8px; /* Add border radius for rounded corners */
+  width: 80%; /* Adjust the width of the input fields */
+  box-sizing: border-box; /* Ensure padding and border are included in width */
+}
+
+/* Styling for the submit button */
+button[type="submit"] {
+  padding: 10px 20px; /* Add padding to the button */
+  margin-top: 20px; /* Add margin to create space between input fields and the button */
+  border: none; /* Remove border */
+  border-radius: 8px; /* Add border radius for rounded corners */
+  background-color: rgb(59, 133, 95); /* Add background color */
+  color: #fff; /* Change text color to white */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Add transition for smooth effect */
+}
+
+button[type="submit"]:hover {
+  background-color: rgb(243, 204, 156); /* Change background color on hover */
+}
 
 .book-list {
    

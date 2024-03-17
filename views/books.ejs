@@ -28,8 +28,8 @@
     <ul class="book-list">
       <% if (dbData.length > 0) { %> <% dbData.forEach(book => { %>
       <li>
-        <span class="book-title book-data">Book:</span> <%= book.title %>
-        <span class="author book-data">written by:</span> <%= book.author %>
+        <span class="book-title book-data">Book Title:</span> <%= book.title %>
+        <span class="author book-data">Author:</span> <%= book.author %>
         <!-- New code for the delete button -->
         <form
           id="deleteForm_<%= book.book_id %>"
