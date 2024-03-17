@@ -23,6 +23,18 @@ h2 {
   text-align: center;
   margin: 20px auto;
 }
+/* style.css */
+
+.book-title {
+  color: rgb(1, 85, 25); /* Change the color as desired */
+}
+
+.author {
+  color:rgb(1, 85, 25); /* Change the color as desired */
+}
+
+
+
 
 .book-card {
   border: 3px solid rgb(236, 223, 207);
@@ -44,6 +56,7 @@ h2 {
 
 
 .book-list {
+   
   list-style-type: decimal; /* Use numerals for list items */
   color: rgb(146, 120, 90);
   font-weight: 500;
@@ -53,3 +66,4 @@ h2 {
   max-width: 800px; /* Limit the width of the book list */
   padding: 0 20px; /* Add some padding to the sides */
 }
+
