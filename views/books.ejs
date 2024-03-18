@@ -23,6 +23,7 @@
     </form>
 
     <!-- List of Books -->
+    <!-- List of Books -->
     <h2>List of Books You Have Read:</h2>
     <ul class="book-list">
       <% if (dbData.length > 0) { %> <% dbData.forEach(book => { %>
@@ -31,10 +32,7 @@
         <span class="author book-data">Author:</span> <%= book.author %>
 
         <!-- Display book cover image -->
-        <img
-          src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg"
-          alt="Book Cover"
-        />
+        <img src="<%= book.coverImageUrl %>" alt="Book Cover" />
 
         <!-- Form for deleting the book -->
         <form

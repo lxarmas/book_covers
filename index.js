@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const axios = require('axios');
 const { Client } = require('pg');
 const path = require('path');
 
@@ -34,49 +35,39 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', async (req, res) => {
   try {
     const dbData = await fetchDataFromDatabase();
-    res.render('index', { dbData });
+    const booksData = await fetchDataFromAPI(dbData);
+    res.render('index', { dbData, booksData });
   } catch (error) {
     handleError(res, error);
   }
 });
 
 // POST a new book with title and author only
-// POST a new book with title, author, and ISBN
 app.post('/books', async (req, res) => {
-    console.log('Received data:', req.body);
-    const { title, author, isbn } = req.body; // Assuming you're collecting ISBN from the user
-    try {
-        // Insert the new book into the database
-        await client.query('INSERT INTO books (title, author, isbn) VALUES ($1, $2, $3)', [title, author, isbn]);
-        
-        // Fetch the updated list of books from the database
-        const dbData = await fetchDataFromDatabase();
-
-        // Respond with the updated list of books
-        res.status(201).render('index', { dbData });
-    } catch (error) {
-        handleError(res, error);
-    }
+  console.log('Received data:', req.body);
+  const { title, author } = req.body;
+  try {
+    const coverImageUrl = await fetchCoverImageUrl(title, author);
+    await client.query('INSERT INTO books (title, author, cover_image_url) VALUES ($1, $2, $3)', [title, author, coverImageUrl]);
+    const dbData = await fetchDataFromDatabase();
+    const booksData = await fetchDataFromAPI(dbData);
+    res.status(201).render('index', { dbData, booksData });
+  } catch (error) {
+    handleError(res, error);
+  }
 });
 
-
-// DELETE a book by ID
 // DELETE a book by ID
 app.delete('/books/:book_id', async (req, res) => {
   const bookId = req.params.book_id;
-   console.log('Deleting book with ID:', bookId); 
-    try {
-        // Delete the book from the database
-        await client.query('DELETE FROM books WHERE book_id = $1', [bookId]);
-
-        // Fetch the updated list of books from the database
-        const dbData = await fetchDataFromDatabase();
-
-        // Respond with the updated list of books
-        res.status(200).json({ success: true, message: 'Book deleted successfully', data: dbData });
-    } catch (error) {
-        handleError(res, error);
-    }
+  try {
+    await client.query('DELETE FROM books WHERE book_id = $1', [bookId]);
+    const dbData = await fetchDataFromDatabase();
+    const booksData = await fetchDataFromAPI(dbData);
+    res.status(200).json({ success: true, message: 'Book deleted successfully', data: dbData });
+  } catch (error) {
+    handleError(res, error);
+  }
 });
 
 // Start the server
@@ -87,6 +78,27 @@ app.listen(port, () => {
 async function fetchDataFromDatabase() {
   const { rows: dbData } = await client.query('SELECT * FROM books');
   return dbData;
+}
+
+async function fetchDataFromAPI(dbData) {
+  // Here you can implement logic to fetch additional data from the API if needed
+  // For now, you can simply return an empty array or the original data
+  return dbData;
+}
+
+async function fetchCoverImageUrl(title, author) {
+  const apiUrl = `https://freebooks-api2.p.rapidapi.com/fetchEbooks/${encodeURIComponent(title)}%20${encodeURIComponent(author)}`;
+  const options = {
+    method: 'GET',
+    url: apiUrl,
+    headers: {
+      'X-RapidAPI-Key': '7c4831f9bemsh413f77d704f66f7p175f27jsna06ed15ef5b8',
+      'X-RapidAPI-Host': 'freebooks-api2.p.rapidapi.com'
+    }
+  };
+  const response = await axios.request(options);
+  // Assuming the API response contains the cover image URL in 'coverImage' property
+  return response.data.coverImage;
 }
 
 function handleError(res, error) {
