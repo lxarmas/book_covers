@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/style.css" />
+    <script
+      type="text/javascript"
+      src="https://www.google.com/books/jsapi.js"
+    ></script>
+    <script type="text/javascript">
+      google.books.load();
+    </script>
     <title>Book C Notes Platform</title>
   </head>
   <body>
@@ -21,8 +28,7 @@
 
       <button type="submit">Add Book</button>
     </form>
-
-    <!-- List of Books -->
+    -->
     <!-- List of Books -->
     <h2>List of Books You Have Read:</h2>
     <ul class="book-list">
@@ -32,8 +38,15 @@
         <span class="author book-data">Author:</span> <%= book.author %>
 
         <!-- Display book cover image -->
-        <img src="<%= book.coverImageUrl %>" alt="Book Cover" />
 
+        <div id="viewerCanvas" style="width: 300px; height: 250px;">
+          <% if (book.image_link) { %>
+          <img src="<%= book.image_link %>" alt="Book Cover" />
+          <% } else { %>
+          <!-- Display a placeholder image or a message -->
+          <span class="error-message">Cover image not available</span>
+          <% } %>
+        </div>
         <!-- Form for deleting the book -->
         <form
           id="deleteForm_<%= book.book_id %>"
