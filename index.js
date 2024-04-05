@@ -51,28 +51,22 @@ app.post('/books', async (req, res) => {
   const { title, author } = req.body;
   try {
     // Fetch ISBN using Google Books API
-    const isbn = await fetchISBN(title, author,image_link);
+   
 
     // Update database with ISBN
-    await client.query('INSERT INTO books (title, author) VALUES ($1, $2, $3)', [title, author, image_link]);
+    await client.query('INSERT INTO books (title, author) VALUES ($1, $2)', [title, author]);
 
-    let image_link = null; // Initialize cover image URL
 
-    // Fetch cover image URL using ISBN if ISBN is available
-    if (isbn) {
-      image_link = await fetchCoverImageUrl(isbn);
 
-      // Update database with cover image URL if it's available
-      if (image_link) {
-        await client.query('UPDATE books SET image_link = $1 WHERE isbn = $2', [image_link, isbn]);
-      }
-    }
+ 
+
+ 
 
     // Fetch data from the database
     const dbData = await fetchDataFromDatabase();
     
     // Render the page with updated data and the relevant book data
-    const bookData = await fetchBookData(title, author,image_link); // Fetch additional book data
+    const bookData = await fetchBookData(title, author); // Fetch additional book data
     res.status(201).render('index', { dbData, bookData }); // Pass both dbData and bookData to the template
   } catch (error) {
     handleError(res, error);
@@ -134,31 +128,7 @@ async function fetchBookData(title, author) {
 }
 
 
-// Function to fetch the cover image URL for a book using the ISBN
-async function fetchCoverImageUrl(isbn) {
-  const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=AIzaSyBAW0TEENq4KSNQkge3xHfBt-hQaTlwKCE`;
-  try {
-    const response = await axios.get(apiUrl);
-    console.log('Google Books API response:', response.data); // Log the response
 
-    const items = response.data.items;
-    if (!items || items.length === 0) {
-      console.error('No book found for the given ISBN');
-      throw new Error('No book found for the given ISBN');
-    }
-
-    const bookData = items[0];
-    if (!bookData || !bookData.volumeInfo || !bookData.volumeInfo.imageLinks || !bookData.volumeInfo.imageLinks.thumbnail) {
-      console.error('Cover image URL not found in book data');
-      throw new Error('Cover image URL not found for the given book');
-    }
-
-    return bookData.volumeInfo.imageLinks.thumbnail;
-  } catch (error) {
-    console.error('Error fetching cover image URL:', error);
-    throw error;
-  }
-}
 
 // Function to handle errors
 function handleError(res, error) {
