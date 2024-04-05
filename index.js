@@ -51,10 +51,10 @@ app.post('/books', async (req, res) => {
   const { title, author } = req.body;
   try {
     // Fetch ISBN using Google Books API
-    const isbn = await fetchISBN(title, author);
+    const isbn = await fetchISBN(title, author,image_link);
 
     // Update database with ISBN
-    await client.query('INSERT INTO books (title, author, isbn) VALUES ($1, $2, $3)', [title, author, isbn]);
+    await client.query('INSERT INTO books (title, author) VALUES ($1, $2, $3)', [title, author, image_link]);
 
     let image_link = null; // Initialize cover image URL
 
@@ -113,37 +113,6 @@ async function fetchDataFromAPI(dbData) {
 
 
 
-// Function to fetch the ISBN for a book from Google Books API
-async function fetchISBN(title, author) {
-  const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(title)}+inauthor:${encodeURIComponent(author)}&key=AIzaSyBAW0TEENq4KSNQkge3xHfBt-hQaTlwKCE`;
-  try {
-    const response = await axios.get(apiUrl);
-    console.log('Google Books API response:', response.data); // Log the response
-    const items = response.data.items;
-    if (!items || items.length === 0) {
-      console.error('No books found for the given search criteria');
-      return null; // Return null if no books are found
-    }
-    const bookData = items[0]; // Get the first item from the array
-    if (!bookData || !bookData.volumeInfo || !bookData.volumeInfo.industryIdentifiers || bookData.volumeInfo.industryIdentifiers.length === 0) {
-      console.error('ISBN not found in book data');
-      return null; // Return null if ISBN is not found
-    }
-    const isbnIdentifier = bookData.volumeInfo.industryIdentifiers.find(identifier => identifier.type === 'ISBN');
-    if (!isbnIdentifier) {
-      console.error('ISBN not found in book data');
-      return null; // Return null if ISBN is not found
-    }
-
-    // Extract cover image URL
-    const imageLink = bookData.volumeInfo.imageLinks?.thumbnail || '';
-
-    return { isbn: isbnIdentifier.identifier, imageLink };
-  } catch (error) {
-    console.error('Error fetching ISBN:', error);
-    throw error; // Rethrow the error to be caught by the caller
-  }
-}
 
 
 // Function to fetch additional book data from Google Books API
