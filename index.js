@@ -46,32 +46,27 @@ app.get('/', async (req, res) => {
 });
 
 // POST a new book with title and author only
+// POST a new book with title and author only
 app.post('/books', async (req, res) => {
   console.log('Received data:', req.body);
   const { title, author } = req.body;
   try {
-    // Fetch ISBN using Google Books API
-   
-
-    // Update database with ISBN
+    // Insert the new book into the database
     await client.query('INSERT INTO books (title, author) VALUES ($1, $2)', [title, author]);
-
-
-
- 
-
- 
 
     // Fetch data from the database
     const dbData = await fetchDataFromDatabase();
     
+    // Fetch additional book data
+    const bookData = await fetchBookData(title, author);
+
     // Render the page with updated data and the relevant book data
-    const bookData = await fetchBookData(title, author); // Fetch additional book data
-    res.status(201).render('index', { dbData, bookData }); // Pass both dbData and bookData to the template
+    res.status(201).render('index', { dbData, bookData });
   } catch (error) {
     handleError(res, error);
   }
 });
+
 
 
 // DELETE a book by ID

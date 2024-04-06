@@ -1,60 +1,85 @@
-async function initialize(isbn) {
-    var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-    viewer.load(`ISBN:${isbn}`);
+// Function to initialize the Google Books viewer with the given thumbnail URL
+function initialize(thumbnailUrl) {
+    const viewerCanvas = document.getElementById('viewerCanvas');
+    viewerCanvas.innerHTML = ''; // Clear previous content if any
+    const img = document.createElement('img');
+    img.src = thumbnailUrl;
+    img.alt = 'Book Thumbnail';
+    img.style.width = '100%'; // Adjust the image size as needed
+    viewerCanvas.appendChild(img);
 }
 
-google.books.setOnLoadCallback(async function() {
-    // Get all elements with class 'book-card' (assuming each book card has this class)
-    const bookCards = document.querySelectorAll('.book-card');
-
-    // Loop through each book card
-    bookCards.forEach(bookCard => {
-        // Get the title and author of the book from the book card
-        const title = bookCard.querySelector('.book-title').innerText.trim();
-        const author = bookCard.querySelector('.author').innerText.trim();
-
-        // Fetch the ISBN for the current book from the server
-        fetchISBN(title, author)
-            .then(isbn => {
-                // Initialize the Google Books viewer with the fetched ISBN
-                initialize(isbn);
-            })
-            .catch(error => {
-                console.error('Error fetching ISBN:', error);
-            });
-    });
-});
-
-async function fetchISBN(title, author) {
-    // Make a request to your server to fetch the ISBN for the given title and author
-    // Example: '/getISBN?title=Title&author=Author'
-    const response = await fetch(`/getISBN?title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}`);
-    if (response.ok) {
-        const data = await response.json();
-        return data.isbn; // Assuming your server returns an object with the ISBN
-    } else {
-        throw new Error('Failed to fetch ISBN');
+// Function to fetch the thumbnail URL for a book from the server
+async function fetchThumbnailUrl(title, author) {
+    try {
+        const response = await fetch(`/getBookData?title=${encodeURIComponent(title)}&author=${encodeURIComponent(author)}`);
+        if (response.ok) {
+            const bookData = await response.json();
+            if (bookData && bookData.thumbnailUrl) {
+                return bookData.thumbnailUrl;
+            } else {
+                throw new Error('Thumbnail URL not found for the book');
+            }
+        } else {
+            throw new Error('Failed to fetch book data');
+        }
+    } catch (error) {
+        throw new Error('Error fetching book data: ' + error.message);
     }
 }
 
+// Function to initialize the Google Books viewer with book data
+async function initializeBookViewer(title, author) {
+    try {
+        const thumbnailUrl = await fetchThumbnailUrl(title, author);
+        initialize(thumbnailUrl);
+    } catch (error) {
+        console.error('Error initializing book viewer:', error);
+    }
+}
+
+// Function to delete a book by its ID
 async function deleteBook(bookId) {
     try {
         const response = await fetch(`/books/${bookId}`, {
-            method: "DELETE",
+            method: 'DELETE',
         });
 
         if (response.ok) {
-            // Handle success
-            console.log("Book deleted successfully");
-            // Optionally, you can remove the deleted book from the UI
-            const deletedRow = document.getElementById(`deleteForm_${bookId}`)
-                .parentNode;
-            deletedRow.remove(); // Remove the entire list item
+            console.log('Book deleted successfully');
+            const deletedRow = document.getElementById(`deleteForm_${bookId}`).parentNode;
+            deletedRow.remove();
         } else {
-            // Handle error
-            console.error("Error deleting book");
+            console.error('Error deleting book');
         }
     } catch (error) {
-        console.error("Error deleting book:", error);
+        console.error('Error deleting book:', error);
     }
 }
+
+// Google Books API callback function
+google.books.setOnLoadCallback(async function() {
+    const bookCards = document.querySelectorAll( '.book-card' );
+    
+    // Loop through each book card
+    bookCards.forEach(async bookCard => {
+        console.log('BookCard:',bookCard)
+        const titleElement = bookCard.querySelector( '.book-title' );
+        console.log('TitleElement:',titleElement);
+        const authorElement = bookCard.querySelector( '.author' );
+        console.log('AuthorElement:',authorElement);
+        
+        if (titleElement && authorElement) {
+            const title = titleElement.innerText.trim();
+            const author = authorElement.innerText.trim();
+            
+            try {
+                await initializeBookViewer(title, author);
+            } catch (error) {
+                console.error('Error initializing book viewer:', error);
+            }
+        } else {
+            console.error('Title or author element not found for the book card');
+        }
+    });
+});
