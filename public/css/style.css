@@ -10,7 +10,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: rgb(250, 228, 200);
+  background-color:  #e8e8e8;;
 }
 
 h1 {
@@ -47,7 +47,20 @@ h2 {
 }
 
 
+.home-background{
 
+ position:absolute;
+  top: 50%;
+
+ 
+  width: 100%;
+  height: 68%;
+  background-image: url('/images/old_library.webp'); /* Specify the path to your WebP image */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.9; /* Adjust opacity as needed */
+
+}
 .book-title {
   
   color: rgb(255, 0, 0); /* Change the color as desired */
@@ -129,3 +142,20 @@ background-color: rgb(178, 105, 105); /* Change background color on hover */
       color: #ff0000; /* Color for error message */
     }
 
+/* bootstrap */
+   .text-primary {
+      color: rgb(160, 100, 22)
+    }
+
+    .btn-primary,
+    .btn-outline-primary {
+      background-color: rgb(152, 152, 152);
+      border-color: rgb(31, 31, 31);
+      color: #ffffff; /* Darker text color for better visibility */
+    }
+
+    .btn-primary:hover,
+    .btn-outline-primary:hover {
+      background-color: rgb(152, 152, 152); /* Darker hover color */
+      border-color: rgb(31, 31, 31); /* Darker hover color */
+    }

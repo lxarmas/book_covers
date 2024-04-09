@@ -27,11 +27,75 @@ client.connect()
 app.get('/', async (req, res) => {
   try {
     const dbData = await fetchDataFromDatabase();
-    res.render('index', { dbData });
+    res.render('home.ejs', { dbData });
   } catch (error) {
     handleError(res, error);
   }
 });
+
+
+
+// app.get("/", (req, res) => {
+//   res.render("home.ejs");
+// });
+
+app.get("/login", (req, res) => {
+  res.render("login.ejs",);
+});
+
+app.get("/register", (req, res) => {
+  res.render("register.ejs", );
+});
+
+app.post( "/register", async ( req, res ) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  try {
+    const checkResult = await client.query( "SELECT * FROM users WHERE username =$1", 
+      [username],
+     );
+    if ( checkResult.rows.length > 0 ) {
+      res.send( "username already exists.Try to logging in." );
+    } else {
+      const result = await client.query(
+        "INSERT INTO users (username,password) VALUES ($1,$2)",
+        [username, password]
+      );
+      const dbData = await fetchDataFromDatabase();
+      res.render( "books.ejs", {dbData} )
+    }
+  } catch ( err ) {
+    console.log(err)
+  }
+});
+
+app.post( "/login", async ( req, res ) => {
+   const username = req.body.username;
+  const password = req.body.password;
+  try {
+    const result = await client.query( "SELECT * FROM users WHERE username = $1", [
+      username,
+    ] );
+    if ( result.rows.length > 0 ) {
+      const user = result.rows[0];
+      const storedPassword = user.password;
+
+      if ( password === storedPassword ) {
+         const dbData = await fetchDataFromDatabase();
+        res.render( "books.ejs", {dbData} );
+      } else {
+        res.send( "Incorrect Password" );
+      }     
+    } else {
+      res.send( "User not found" );
+  }
+  } catch ( err ) {
+    console.log( err );
+  }
+});
+
+
 
 app.post('/books', async (req, res) => {
   const { title, author } = req.body;
@@ -44,7 +108,7 @@ app.post('/books', async (req, res) => {
     const thumbnailUrl = bookData.volumeInfo.imageLinks ? bookData.volumeInfo.imageLinks.thumbnail : null;
     await client.query('INSERT INTO books (title, author, image_link) VALUES ($1, $2, $3)', [title, author, thumbnailUrl]);
     const dbData = await fetchDataFromDatabase();
-    res.status(201).render('index', { dbData });
+    res.status(201).render('books', { dbData });
   } catch (error) {
     handleError(res, error);
   }
