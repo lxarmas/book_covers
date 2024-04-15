@@ -30,3 +30,29 @@ async function deleteBook(bookId) {
     }
 }
 
+// main.js
+
+// Function to handle logout
+function logout() {
+  // Make an AJAX request to the logout route
+  fetch('/logout', {
+    method: 'POST', // Use POST method
+    headers: {
+      'Content-Type': 'application/json' // Specify JSON content type
+    }
+  })
+  .then(response => {
+    // Check if the response status is OK
+    if (response.ok) {
+      // Redirect to the login page after successful logout
+      window.location.href = '/login';
+    } else {
+      // Handle error
+      console.error('Logout failed:', response.statusText);
+    }
+  })
+  .catch(error => {
+    // Handle fetch error
+    console.error('Logout failed:', error);
+  });
+}
