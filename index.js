@@ -40,8 +40,9 @@ client.connect()
 
 app.get('/', async (req, res) => {
   try {
-    const dbData = await fetchDataFromDatabase();
-    res.render('home.ejs', { dbData });
+    const user_id = req.session.user_id; // Retrieve the user_id from the session
+    const dbData = await fetchDataFromDatabase(user_id);
+    res.render('home.ejs', { user_id, dbData });
   } catch (error) {
     handleError(res, error);
   }
@@ -97,7 +98,7 @@ app.post("/login", async (req, res) => {
       if (password === storedPassword) {
         const user_id = user.user_id;
         console.log("User ID,login:", user_id); // Add this line for debugging
-        const dbData = await fetchDataFromDatabase();
+        const dbData = await fetchDataFromDatabase(user_id);
         console.log("Database Data,logIN:", dbData); // Add this line for debugging
         res.render("books.ejs", { user_id, dbData });
       } else {
@@ -165,10 +166,16 @@ app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-async function fetchDataFromDatabase() {
-  const { rows: dbData } = await client.query('SELECT * FROM books');
-  return dbData;
+async function fetchDataFromDatabase(user_id) {
+  try {
+    const { rows: dbData } = await client.query('SELECT * FROM books WHERE user_id = $1', [user_id]);
+    return dbData;
+  } catch (error) {
+    console.error('Error fetching data from database:', error);
+    throw error; // Rethrow the error to handle it in the calling function
+  }
 }
+
 
 async function fetchBookData(title, author) {
   const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(title)}+inauthor:${encodeURIComponent(author)}`;
