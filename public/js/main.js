@@ -45,7 +45,7 @@ function logout() {
     // Check if the response status is OK
     if (response.ok) {
       // Redirect to the login page after successful logout
-      window.location.href = '/login';
+      window.location.href = '/';
     } else {
       // Handle error
       console.error('Logout failed:', response.statusText);

@@ -77,7 +77,7 @@ app.post("/register", async (req, res) => {
       const user_id = result.rows[0].user_id;
       console.log("User ID:", user_id);
 
-      const dbData = await fetchDataFromDatabase();
+      const dbData = await fetchDataFromDatabase(user_id);
       res.render("books.ejs", { user_id, dbData });
     }
   } catch (err) {
@@ -118,7 +118,7 @@ app.post('/logout', (req, res) => {
       console.error('Error destroying session:', err);
       res.status(500).send('Error logging out');
     } else {
-      res.redirect('/login'); // Redirect to the login page or another appropriate page
+      res.redirect('/'); // Redirect to the login page or another appropriate page
     }
   });
 });
@@ -141,7 +141,7 @@ app.post('/books', async (req, res) => {
     }
     const thumbnailUrl = bookData.volumeInfo.imageLinks ? bookData.volumeInfo.imageLinks.thumbnail : null;
     await client.query('INSERT INTO books (title, author, image_link,user_id) VALUES ($1, $2, $3,$4)', [title, author, thumbnailUrl,user_id]);
-    const dbData = await fetchDataFromDatabase();
+    const dbData = await fetchDataFromDatabase(user_id);
     res.status(201).render('books', { user_id: user_id, dbData: dbData });
 
   } catch (error) {
