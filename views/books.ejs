@@ -19,7 +19,8 @@
     </form>
 
     <!-- List of Books -->
-    <h2>List of Books You Have Read:</h2>
+<h2 id="booksReadHeader">List of Books You Have Read: <%= dbData.length %></h2>
+
     <ul class="book-list">
       <% if (dbData.length > 0) { %> <% dbData.forEach(book => { %>
       <li>
