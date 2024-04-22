@@ -18,6 +18,9 @@ h1 {
   text-align: center;
   margin: 20px 0;
   font-family: Arial, Helvetica, sans-serif;
+  font-weight:bold;
+  text-decoration-line: underline;
+  text-transform: uppercase;
 }
 
 h2 {
@@ -87,7 +90,7 @@ h2 {
     position: fixed;
     top: 20px; /* Adjust the distance from the top as needed */
     right: 20px; /* Adjust the distance from the right as needed */
-    background-color: #ce2207; /* Green */
+    background-color: #1ee1b7; /* Green */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -102,7 +105,7 @@ h2 {
   }
 
   .logout-button:hover {
-    background-color: #890505; /* Darker green */
+    background-color: #04666e; /* Darker green */
   }
 
 /* Styling for the countBook class */
@@ -185,12 +188,12 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 
 
 .book-list li {
-  width: 225px; /* Adjust the width as needed */
-  height: 450px; /* Adjust the height as needed */
+  width: 400px; /* Adjust the width as needed */
+  height: 400px; /* Adjust the height as needed */
   margin: 5px;
   padding: 20px; 
-  background-color: #7a9a8d;;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for a slight elevation effect */
+
+  
   border-radius: 10px;
   position: relative;
   overflow: hidden;
@@ -200,12 +203,29 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 
 /* Styling for the book image */
 .book-list li img {
-  width: 100%;
+  width: 50%;
   height: auto;
   display: block;
+  
   border-radius: 10px 10px 0 0; /* Rounded corners only on the top */
   position: relative;
   
+}
+.delete-form {
+  display: inline-block;
+}
+
+.deleteButton {
+  background-color: transparent; /* Make the background transparent */
+  border: none; /* Remove the border */
+  color: #800000; /* Change the text color */
+  font-size: 14px; /* Adjust the font size */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: color 0.3s ease; /* Add transition effect for color change */
+}
+
+.deleteButton:hover {
+  color: #333; /* Change text color on hover */
 }
 
 

@@ -3,7 +3,7 @@
   
   <body>
   <button class="logout-button" onclick="logout()">Logout</button>
-    <h1 class="animated-header">What Have You Read?</h1>
+    <h1 class="animated-header">worthy reads</h1>
 
       
     <form class="book-card" action="/books" method="post">
@@ -25,6 +25,7 @@
       <ul class="book-list">
       <% if (dbData.length > 0) { %> <% dbData.forEach(book => { %>
       <li>
+
        <form id="deleteForm_<%= book.book_id %>" action="/books/<%= book.book_id %>" method="post" class="delete-form">
       <input type="hidden" name="_method" value="delete" />
       <button class="deleteButton" type="button" onclick="deleteBook('<%= book.book_id %>')">Delete</button>
