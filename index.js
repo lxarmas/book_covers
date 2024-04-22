@@ -48,10 +48,6 @@ app.get('/', async (req, res) => {
   }
 });
 
-
-
-
-
 app.get("/login", (req, res) => {
   res.render("login.ejs",);
 });
@@ -118,22 +114,17 @@ app.post('/logout', (req, res) => {
       console.error('Error destroying session:', err);
       res.status(500).send('Error logging out');
     } else {
-      res.redirect('/'); // Redirect to the login page or another appropriate page
+      res.redirect('/'); 
     }
   });
 });
-
-
 
 app.post('/books', async (req, res) => {
   const { title, author,user_id } = req.body;
   console.log('Inserting book with title:', title);
   console.log('Author:', author);
-  console.log('User ID:', user_id); // Make sure user_id is correct
+  console.log('User ID:', user_id);
   try {
-  
- 
-
     const bookData = await fetchBookData(title, author,user_id);
     if (!bookData) {
       res.status(404).send('Book not found');
@@ -149,9 +140,7 @@ app.post('/books', async (req, res) => {
   }
 });
 
-
-
-app.delete('/books/:book_id', async (req, res) => {
+app.delete( '/books/:book_id', async ( req, res ) => {
   const bookId = req.params.book_id;
   try {
     await client.query('DELETE FROM books WHERE book_id = $1', [bookId]);
@@ -162,9 +151,7 @@ app.delete('/books/:book_id', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+
 
 async function fetchDataFromDatabase(user_id) {
   try {
@@ -176,8 +163,7 @@ async function fetchDataFromDatabase(user_id) {
   }
 }
 
-
-async function fetchBookData(title, author) {
+async function fetchBookData( title, author ) {
   const apiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(title)}+inauthor:${encodeURIComponent(author)}`;
   try {
     const response = await axios.get(apiUrl);
@@ -197,3 +183,7 @@ function handleError(res, error) {
   console.error('Error:', error);
   res.status(500).json({ error: 'Internal Server Error' });
 }
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});

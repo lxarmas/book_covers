@@ -10,7 +10,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color:  #e8e8e8;;
+  background-color:  #d5d4c2;;
 }
 
 h1 {
@@ -46,8 +46,7 @@ h2 {
   opacity: 0.8; /* Adjust opacity as needed */
 }
 
-
-  .home-background {
+.home-background {
     position: absolute;
     top: 0;
     left: 0;
@@ -78,7 +77,56 @@ h2 {
 .author {
   color:rgb(255, 0, 0) /* Change the color as desired */
 }
+  .logout-button {
+    position: fixed;
+    top: 20px; /* Adjust the distance from the top as needed */
+    right: 20px; /* Adjust the distance from the right as needed */
+    background-color: #ce2207; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: Arial, sans-serif; /* Or any other modern font */
+  }
 
+  .logout-button:hover {
+    background-color: #890505; /* Darker green */
+  }
+
+/* Styling for the countBook class */
+.countBook {
+  color:#6a642c;
+  font-size: 45px; 
+  text-align: center;
+  margin-top: 50px; 
+}
+#bookCount {
+  color: #ff1515; /* Green color */
+  font-weight: bold;
+  animation: countAnimation 2s ease-out forwards;
+}
+
+/* Keyframe animation for counting */
+@keyframes countAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.countMessage{
+  color:#6a642c;
+  font-size: 25px;
+}
 
 .book-card {
   border: 3px solid rgb(119, 135, 148);
@@ -124,29 +172,96 @@ button[type="submit"] {
 button[type="submit"]:hover {
 background-color: rgb(178, 105, 105); /* Change background color on hover */
 }
+/* Styling for the book list wrapper */
+.book-list-wrapper {
+  display: flex;
+  justify-content: center;
+}
 
-    .book-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust the minmax value as needed */
-      grid-gap: 20px; /* Adjust the gap between items */
-      list-style-type: none; /* Remove default list styling */
-      color: rgb(0, 0, 0);
-      font-weight: 500;
-      font-size: 20px; /* Adjust font size as needed */
-      line-height: 1.5;
-      margin-left: 50px;
-      padding: 10px 20px; /* Add some padding to the sides */
-    }
-    .book-list li {
-      background-color: #c9c9c9; /* Background color for each list item */
-      padding: 20px; /* Add some padding to each list item */
-      border-radius: 10px; /* Add rounded corners */
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
-    }
-    .book-list img {
-      max-width: 100%; /* Ensure images don't exceed the width of their container */
-      height: auto; /* Maintain aspect ratio */
-    }
+/* Styling for the book list */
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+}
+
+
+.book-list li {
+  width: 200px; /* Adjust the width as needed */
+  height: 400px; /* Adjust the height as needed */
+  margin: 20px;
+  padding: 20px;
+  background-color: #a8a8a8; /* Background color for the book item */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow for a slight elevation effect */
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+/* Styling for the book cover */
+.book-list li .book-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #6a642c; /* Dark brown color for the book cover */
+  border: 3px solid #4d4930; /* Darker border for a more realistic look */
+  border-radius: 5px;
+  transform: skewY(-5deg) rotateY(10deg); /* Skew and rotate to give a book-like appearance */
+  transition: transform 0.5s ease;
+}
+
+/* Styling for the book image */
+.book-list li img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px 10px 0 0; /* Rounded corners only on the top */
+  position: relative;
+  z-index: 1; /* Ensure the image is above the book cover */
+}
+
+/* Hover effect to simulate picking up a book */
+.book-list li:hover .book-cover {
+  transform: skewY(-5deg) rotateY(0deg); /* Rotate the book cover when hovered */
+}
+
+/* Styling for the book title */
+.book-list li h3 {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* Styling for the book description */
+.book-list li p {
+  font-size: 14px;
+  color: #666;
+}
+/* Styling for the delete button */
+.book-list li .delete-button {
+  position: absolute;
+  top: 10px; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+  background-color: #ce2207; /* Red color for the delete button */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 2; /* Ensure the button is above other elements */
+}
+
+/* Styling for the delete button on hover */
+.book-list li:hover .delete-button {
+  background-color: #890505; /* Darker red color on hover */
+}
+
+ 
     .book-list .error-message {
       color: #ff0000; /* Color for error message */
     }

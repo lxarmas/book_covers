@@ -8,10 +8,6 @@ function initialize(thumbnailUrl) {
     img.style.width = '100%'; // Adjust the image size as needed
     viewerCanvas.appendChild(img);
 }
-
-
-
-// Function to delete a book by its ID
 async function deleteBook(bookId) {
     try {
         const response = await fetch(`/books/${bookId}`, {
@@ -53,6 +49,3 @@ function logout() {
   });
 }
 
-function updateBooksReadHeader( dbData ) {
-  const booksReadHeader = document.getElementById( 'booksReadHeader' );
-}

@@ -2,10 +2,9 @@
   <%- include('partials/header') %>
   
   <body>
-    <button onclick="logout()">Logout</button>
+  <button class="logout-button" onclick="logout()">Logout</button>
     <h1>Books Readed By You</h1>
-
-    <!-- Form for adding books -->
+      
     <form class="book-card" action="/books" method="post">
       <label for="title">Title:</label>
       <input type="text" id="title" name="title" required />
@@ -19,9 +18,10 @@
     </form>
 
     <!-- List of Books -->
-<h2 id="booksReadHeader">List of Books You Have Read: <%= dbData.length %></h2>
-
-    <ul class="book-list">
+ <h2 class="countBook">You have read <span id="bookCount"><%= dbData.length %></span> books, keep up the good work, friend!</h2>
+ <h2 class="countMessage">Reload the page in order to get the most updated amount of books you have read</h2>
+      <div class="book-list-wrapper">
+      <ul class="book-list">
       <% if (dbData.length > 0) { %> <% dbData.forEach(book => { %>
       <li>
         <span class="book-title">Book Title:</span> <%= book.title %>
@@ -31,11 +31,9 @@
           <% if (book.image_link) { %>
           <img src="<%= book.image_link %>" alt="Book Cover" />
           <% } else { %>
-          <!-- Display a placeholder image or a message -->
           <span class="error-message">Cover image not available</span>
           <% } %>
         </div>
-        <!-- Form for deleting the book -->
         <form
           id="deleteForm_<%= book.book_id %>"
           action="/books/<%= book.book_id %>"
@@ -47,12 +45,13 @@
             Delete
           </button>
         </form>
-        <!-- End of delete button code -->
+       
       </li>
       <% }); %> <% } else { %>
       <li>No books found</li>
       <% } %>
     </ul>
+    </div>
 
     <script src="/js/main.js"></script>
   </body>
