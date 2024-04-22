@@ -10,45 +10,37 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color:  #e0e0e0;;
+  background-color:  #ffffff;;
 }
 
-h1 {
-  color: rgb(44, 122, 110); 
-  text-align: center;
-  margin: 20px 0;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight:bold;
-  text-decoration-line: underline;
-  text-transform: uppercase;
-}
 
-h2 {
-  color: rgb(0, 0, 0);
-  text-align: center;
-  margin: 20px auto;
-}
+
+
 /* HEADER */
+ .header {
+  
+  background-image: url('/images/marbled-8050572_1280.png');
+    background-size: cover;
+  padding: 20px 0; /* Add padding */
+  text-align: center; /* Center align text */
+  }
+  
+  .header h1 {
+   color: #000000; /* Set text color */
+   font-family: Arial, sans-serif; /* Set font family */
+   font-weight: bold; /* Set font weight */
+   font-size: 4em; /* Set font size */
+   margin: 0; /* Remove margin */
+   }
+
+   .header p {
+   color: #000000; /* Set text color */
+   font-family: Arial, sans-serif; /* Set font family */
+   font-size: 1.2em; /* Set font size */
+   margin-top: 10px; /* Add margin top */
+   }
 
 
-.header {
-  position: relative;
-  height: 150px; /* Adjust height as needed */
-  text-align: center;
-}
-
-
-.header-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('/images/old_library.webp'); /* Specify the path to your WebP image */
-  background-size: cover;
-  background-position: center;
-  opacity: 0.8; /* Adjust opacity as needed */
-}
 
 .home-background {
     position: absolute;
@@ -56,7 +48,7 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/images/old_library.webp');
+    background-image: url('/images/marbled-8050572_1280.png');
     background-size: cover;
     background-position: center;
     opacity: 0.8;
@@ -90,9 +82,9 @@ h2 {
     position: fixed;
     top: 20px; /* Adjust the distance from the top as needed */
     right: 20px; /* Adjust the distance from the right as needed */
-    background-color: #1ee1b7; /* Green */
+    background-color: #94edd9; /* Green */
     border: none;
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -110,10 +102,19 @@ h2 {
 
 /* Styling for the countBook class */
 .countBook {
+  font-family:cursive;
   color:#12645e;
   font-size: 45px; 
   text-align: center;
-  margin-top: 10px; 
+ 
+}
+.countMessage{
+  font-family: cursive;
+  color:#266759;
+  font-size: 25px;
+  text-align: center;
+  
+
 }
 #bookCount {
   color: #ff0000; /* Green color */
@@ -132,12 +133,7 @@ h2 {
     transform: translateY(0);
   }
 }
-.countMessage{
-  color:#266759;
-  font-size: 25px;
-  margin-top: 0px;
-  margin-bottom: 15px;
-}
+
 
 .book-card {
   border: 3px solid rgb(92, 91, 91);
@@ -148,7 +144,7 @@ h2 {
   border-radius: 50px; /* Increased border radius for a more rounded appearance */
    background-image: url('/images/marbled-8050572_1280.png');
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Increased shadow for depth effect */
- display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center; /* Align children vertically */
   align-items: center; /* Align children horizontally */
@@ -179,31 +175,29 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 
 
 .book-list {
+ 
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   list-style-type: none;
-  padding: 0;
+  
+  
 }
 
 
 .book-list li {
-  width: 400px; /* Adjust the width as needed */
-  height: 400px; /* Adjust the height as needed */
-  margin: 5px;
-  padding: 20px; 
 
-  
-  border-radius: 10px;
-  position: relative;
+  width: 200px; 
+  height: 450px;
   overflow: hidden;
+  margin: 20px;
   
 }
 
 
 /* Styling for the book image */
 .book-list li img {
-  width: 50%;
+  width: 100%;
   height: auto;
   display: block;
   
@@ -218,7 +212,7 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 .deleteButton {
   background-color: transparent; /* Make the background transparent */
   border: none; /* Remove the border */
-  color: #800000; /* Change the text color */
+  color: #65a27b; /* Change the text color */
   font-size: 14px; /* Adjust the font size */
   cursor: pointer; /* Change cursor to pointer */
   transition: color 0.3s ease; /* Add transition effect for color change */
