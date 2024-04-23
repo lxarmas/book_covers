@@ -17,28 +17,29 @@ body {
 
 
 /* HEADER */
- .header {
-  
+.header {
   background-image: url('/images/marbled-8050572_1280.png');
-    background-size: cover;
-  padding: 20px 0; /* Add padding */
-  text-align: center; /* Center align text */
-  }
-  
-  .header h1 {
+  background-size: cover;
+  padding: 10px 0; /* Reduce padding to bring elements closer */
+}
+
+.header h1 {
    color: #000000; /* Set text color */
    font-family: Arial, sans-serif; /* Set font family */
    font-weight: bold; /* Set font weight */
    font-size: 4em; /* Set font size */
-   margin: 0; /* Remove margin */
-   }
+   margin-left: 0.2em; /* Adjust margin-left if needed */
+   margin-bottom: 0.2em; /* Adjust margin-bottom to bring closer */
+   text-align: left;
+}
 
-   .header p {
+.headerP {
    color: #000000; /* Set text color */
    font-family: Arial, sans-serif; /* Set font family */
-   font-size: 1.2em; /* Set font size */
-   margin-top: 10px; /* Add margin top */
-   }
+   font-size: 1.8em; /* Set font size */
+   margin-left: 0.5em; /* Adjust margin-left if needed */
+    
+}
 
 
 
@@ -102,20 +103,28 @@ body {
 
 /* Styling for the countBook class */
 .countBook {
-  font-family:cursive;
+  font-family:Arial, Helvetica, sans-serif;
   color:#12645e;
   font-size: 45px; 
   text-align: center;
  
 }
 .countMessage{
-  font-family: cursive;
+  font-family: Arial, Helvetica, sans-serif;
   color:#266759;
   font-size: 25px;
   text-align: center;
-  
-
 }
+
+.welcomeName{
+  text-transform: uppercase;
+   font-family: Arial, Helvetica, sans-serif;
+  color:#266759;
+  font-size: 65px;
+  text-align: center;
+}
+
+
 #bookCount {
   color: #ff0000; /* Green color */
   font-weight: bold;
@@ -224,7 +233,8 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 
 
 
-/* bootstrap */
+bootstrap
+
    .text-primary {
       color: rgb(160, 100, 22)
     }
@@ -233,11 +243,11 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
     .btn-outline-primary {
       background-color: rgb(152, 152, 152);
       border-color: rgb(31, 31, 31);
-      color: #ffffff; /* Darker text color for better visibility */
+      color: #ffffff; 
     }
 
     .btn-primary:hover,
     .btn-outline-primary:hover {
-      background-color: rgb(152, 152, 152); /* Darker hover color */
-      border-color: rgb(31, 31, 31); /* Darker hover color */
+      background-color: rgb(152, 152, 152); 
+      border-color: rgb(31, 31, 31);
     }

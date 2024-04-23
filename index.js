@@ -57,8 +57,9 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const { username, password, first_name , last_name } = req.body;
+
+  console.log("Received data:", { username, password, first_name, last_name });
 
   try {
     const checkResult = await client.query("SELECT * FROM users WHERE username = $1", [username]);
@@ -66,21 +67,31 @@ app.post("/register", async (req, res) => {
     if (checkResult.rows.length > 0) {
       res.send("Username already exists. Try logging in.");
     } else {
-      const result = await client.query("INSERT INTO users (username, password) VALUES ($1, $2) RETURNING user_id", [username, password]);
-      
+      const result = await client.query("INSERT INTO users (username, password, first_name, last_name) VALUES ($1, $2, $3, $4) RETURNING user_id", [username, password, first_name, last_name]);
+
       // Logging the result and user_id
       console.log("Result:", result.rows);
       const user_id = result.rows[0].user_id;
-      console.log("User ID:", user_id);
+      console.log( "User ID:", user_id );
+      
+      const users = { first_name, last_name };
+
+      // Log users object
+      console.log("Users:", users);
+
 
       const dbData = await fetchDataFromDatabase(user_id);
-      res.render("books.ejs", { user_id, dbData });
+      res.render("books.ejs", { user_id, dbData, users });
+
+
     }
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
   }
 });
+
+
 
 app.post("/login", async (req, res) => {
   const username = req.body.username;
@@ -93,10 +104,14 @@ app.post("/login", async (req, res) => {
 
       if (password === storedPassword) {
         const user_id = user.user_id;
-        console.log("User ID,login:", user_id); // Add this line for debugging
+
+        // Retrieve first_name and last_name from the user object
+        const { first_name, last_name } = user;
+        const users = { first_name, last_name };
+
         const dbData = await fetchDataFromDatabase(user_id);
-        console.log("Database Data,logIN:", dbData); // Add this line for debugging
-        res.render("books.ejs", { user_id, dbData });
+        // console.log("Database Data,logIN:", dbData); // Add this line for debugging
+        res.render("books.ejs", { user_id, dbData, users });
       } else {
         res.send("Incorrect Password");
       }
@@ -105,8 +120,10 @@ app.post("/login", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    res.status(500).send("Internal Server Error");
   }
 });
+
 
 app.post('/logout', (req, res) => {
   req.session.destroy((err) => {
@@ -121,9 +138,9 @@ app.post('/logout', (req, res) => {
 
 app.post('/books', async (req, res) => {
   const { title, author,user_id } = req.body;
-  console.log('Inserting book with title:', title);
-  console.log('Author:', author);
-  console.log('User ID:', user_id);
+  // console.log('Inserting book with title:', title);
+  // console.log('Author:', author);
+  // console.log('User ID:', user_id);
   try {
     const bookData = await fetchBookData(title, author,user_id);
     if (!bookData) {
