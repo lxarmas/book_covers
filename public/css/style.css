@@ -233,21 +233,8 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 
 
 
-bootstrap
-
-   .text-primary {
-      color: rgb(160, 100, 22)
-    }
-
-    .btn-primary,
-    .btn-outline-primary {
-      background-color: rgb(152, 152, 152);
-      border-color: rgb(31, 31, 31);
-      color: #ffffff; 
-    }
-
-    .btn-primary:hover,
-    .btn-outline-primary:hover {
-      background-color: rgb(152, 152, 152); 
-      border-color: rgb(31, 31, 31);
+ 
+    /* footer */
+    .text-mute{
+      color: rgb(69, 115, 95);
     }
