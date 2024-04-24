@@ -73,21 +73,14 @@ app.post("/register", async (req, res) => {
       console.log("Result:", result.rows);
       const user_id = result.rows[0].user_id;
       console.log( "User ID:", user_id );
-      
       const users = { first_name, last_name };
-
-      // Log users object
       console.log("Users:", users);
-
-
       const dbData = await fetchDataFromDatabase(user_id);
       res.render("books.ejs", { user_id, dbData, users });
-
-
-    }
+      }
   } catch (err) {
-    console.log(err);
-    res.status(500).send("Internal Server Error");
+  console.log(err);
+  res.status(500).send("Internal Server Error");
   }
 });
 
@@ -137,36 +130,28 @@ app.post('/logout', (req, res) => {
 });
 
 app.post('/books', async (req, res) => {
-  const { title, author,user_id } = req.body;
-  // console.log('Inserting book with title:', title);
-  // console.log('Author:', author);
-  // console.log('User ID:', user_id);
+  const { title, author, user_id } = req.body;
   try {
-    const bookData = await fetchBookData(title, author,user_id);
+    const bookData = await fetchBookData(title, author, user_id);
     if (!bookData) {
       res.status(404).send('Book not found');
       return;
     }
     const thumbnailUrl = bookData.volumeInfo.imageLinks ? bookData.volumeInfo.imageLinks.thumbnail : null;
-    await client.query('INSERT INTO books (title, author, image_link,user_id) VALUES ($1, $2, $3,$4)', [title, author, thumbnailUrl,user_id]);
+    await client.query('INSERT INTO books (title, author, image_link, user_id) VALUES ($1, $2, $3, $4)', [title, author, thumbnailUrl, user_id]);
+    
+    // Fetch the user's data including first_name from the database
+    const userData = await client.query('SELECT first_name FROM users WHERE user_id = $1', [user_id]);
+    const first_name = userData.rows[0].first_name;
+
     const dbData = await fetchDataFromDatabase(user_id);
-    res.status(201).render('books', { user_id: user_id, dbData: dbData });
+    res.status(201).render('books', { user_id: user_id, dbData: dbData, users: { first_name: first_name } });
 
   } catch (error) {
     handleError(res, error);
   }
 });
 
-app.delete( '/books/:book_id', async ( req, res ) => {
-  const bookId = req.params.book_id;
-  try {
-    await client.query('DELETE FROM books WHERE book_id = $1', [bookId]);
-    const dbData = await fetchDataFromDatabase();
-    res.status(200).json({ success: true, message: 'Book deleted successfully', data: dbData });
-  } catch (error) {
-    handleError(res, error);
-  }
-});
 
 
 
@@ -195,6 +180,18 @@ async function fetchBookData( title, author ) {
     return null;
   }
 }
+app.delete('/books/:book_id', async (req, res) => {
+  const bookId = req.params.book_id;
+  const user_id = req.session.user_id; // Retrieve the user_id from the session
+  try {
+    await client.query('DELETE FROM books WHERE book_id = $1', [bookId]);
+    const dbData = await fetchDataFromDatabase(user_id); // Pass user_id to fetch updated data
+    res.status(200).json({ success: true, message: 'Book deleted successfully', data: dbData });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 
 function handleError(res, error) {
   console.error('Error:', error);

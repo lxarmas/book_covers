@@ -8,6 +8,8 @@ function initialize(thumbnailUrl) {
     img.style.width = '100%'; // Adjust the image size as needed
     viewerCanvas.appendChild(img);
 }
+
+
 async function deleteBook(bookId) {
     try {
         const response = await fetch(`/books/${bookId}`, {
@@ -26,6 +28,7 @@ async function deleteBook(bookId) {
         console.error('Error deleting book:', error);
     }
 }
+
 function logout() {
  fetch('/logout', {
     method: 'POST', 
