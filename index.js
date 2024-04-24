@@ -180,7 +180,6 @@ async function fetchBookData( title, author ) {
     return null;
   }
 }
-
 app.delete('/books/:book_id', async (req, res) => {
   const bookId = req.params.book_id;
   const user_id = req.session.user_id; // Retrieve the user_id from the session

@@ -120,11 +120,24 @@ body {
 }
 
 .welcomeName{
+  margin-top: 1em;
   text-transform: uppercase;
    font-family: Arial, Helvetica, sans-serif;
   color:#266759;
-  font-size: 65px;
+  font-weight: lighter;
+  font-size: 3em;
   text-align: center;
+  animation: countAnimation 2s ease-out forwards;
+}
+@keyframes countAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 
