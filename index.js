@@ -180,23 +180,34 @@ async function fetchBookData( title, author ) {
     return null;
   }
 }
+
 app.delete('/books/:book_id', async (req, res) => {
   const bookId = req.params.book_id;
   const user_id = req.session.user_id; // Retrieve the user_id from the session
   try {
     await client.query('DELETE FROM books WHERE book_id = $1', [bookId]);
-    const dbData = await fetchDataFromDatabase(user_id); // Pass user_id to fetch updated data
-    res.status(200).json({ success: true, message: 'Book deleted successfully', data: dbData });
+    const updatedBookCount = await fetchBookCount(user_id); // Fetch updated book count
+    res.status(200).json({ success: true, message: 'Book deleted successfully', bookCount: updatedBookCount });
   } catch (error) {
     handleError(res, error);
   }
 });
 
+async function fetchBookCount(user_id) {
+  try {
+    const result = await client.query('SELECT COUNT(*) FROM books WHERE user_id = $1', [user_id]);
+    return result.rows[0].count;
+  } catch (error) {
+    throw error;
+  }
+}
 
 function handleError(res, error) {
   console.error('Error:', error);
   res.status(500).json({ error: 'Internal Server Error' });
 }
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

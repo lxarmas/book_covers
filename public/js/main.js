@@ -19,15 +19,23 @@ async function deleteBook(bookId) {
         if (response.ok) {
             console.log('Book deleted successfully');
             const deletedRow = document.getElementById(`deleteForm_${bookId}`).parentNode;
-          deletedRow.remove();
-         
+            deletedRow.remove();
+
+            // Update the book count based on the current count
+            const currentCount = parseInt(document.getElementById('bookCount').innerText);
+            document.getElementById('bookCount').innerText = currentCount - 1;
         } else {
-            console.error('Error deleting book');
+            // Handle non-200 HTTP status codes
+            const errorData = await response.json();
+            throw new Error(`Failed to delete book: ${errorData.message}`);
         }
     } catch (error) {
-        console.error('Error deleting book:', error);
+        console.error('Error deleting book:', error.message);
+        // Display error message to the user or handle it gracefully
+        alert('An error occurred while deleting the book. Please try again later.');
     }
 }
+
 
 function logout() {
  fetch('/logout', {
