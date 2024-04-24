@@ -16,30 +16,33 @@ body {
 
 
 
-/* HEADER */
+
 .header {
   background-image: url('/images/marbled-8050572_1280.png');
   background-size: cover;
-  padding: 10px 0; /* Reduce padding to bring elements closer */
+  padding: 10px 0;
 }
 
 .header h1 {
-   color: #000000; /* Set text color */
-   font-family: Arial, sans-serif; /* Set font family */
-   font-weight: bold; /* Set font weight */
-   font-size: 4em; /* Set font size */
-   margin-left: 0.2em; /* Adjust margin-left if needed */
-   margin-bottom: 0.2em; /* Adjust margin-bottom to bring closer */
-   text-align: left;
+  color: #000000; /* Set text color */
+  font-family: Arial, sans-serif; /* Set font family */
+  font-weight: bold; /* Set font weight */
+  font-size: 4em; /* Set font size */
+  margin: 0.2em 0; /* Adjust margin for top and bottom */
+  text-align: left;
+  margin-left: 0.5em;
 }
 
-.headerP {
-   color: #000000; /* Set text color */
-   font-family: Arial, sans-serif; /* Set font family */
-   font-size: 1.8em; /* Set font size */
-   margin-left: 0.5em; /* Adjust margin-left if needed */
-    
+.header p {
+  color: #000000; /* Set text color */
+  font-family: Arial, sans-serif; /* Set font family */
+  font-size: 1.8em; /* Set font size */
+  margin: 0; /* Reset margin */
+  position: relative; /* Enable positioning */
+  top: -1em; /* Adjust vertical position */
+  margin-left: 1.4em;
 }
+
 
 
 
