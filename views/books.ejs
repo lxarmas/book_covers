@@ -21,34 +21,35 @@
 
     <!-- List of Books -->
  <h2 class="countBook">You have read <span id="bookCount"><%= dbData.length %></span> books, keep up the good work, friend!</h2>
- <h2 class="countMessage">Reload the page in order to get the most updated amount of books you have read</h2>
+
       
-      <ul class="book-list">
-      <% if (dbData.length > 0) { %> <% dbData.forEach(book => { %>
-      <li>
-
-       <form id="deleteForm_<%= book.book_id %>" action="/books/<%= book.book_id %>" method="post" class="delete-form">
-      <input type="hidden" name="_method" value="delete" />
-      <button class="deleteButton" type="button" onclick="deleteBook('<%= book.book_id %>')">Delete</button>
-      </form>
-
-       <div id="viewerCanvas">
+ <ul class="book-list">
+  <% if (dbData.length > 0) { %> 
+    <% dbData.forEach(book => { %>
+      <li class="book">
+        <form id="deleteForm_<%= book.book_id %>" action="/books/<%= book.book_id %>" method="post" class="delete-form">
+          <input type="hidden" name="_method" value="delete" />
+          <button class="deleteButton" type="button" onclick="deleteBook('<%= book.book_id %>')">Delete</button>
+        </form>
+        <div class="book-cover">
           <% if (book.image_link) { %>
-          <img src="<%= book.image_link %>" alt="Book Cover" />
+            <img src="<%= book.image_link %>" alt="Book Cover" />
           <% } else { %>
-          <span class="error-message">Cover image not available</span>
+            <span class="error-message">Cover image not available</span>
           <% } %>
         </div>
-         <span class="book-title">Book Title:</span> <%= book.title %>
-        <span class="author">Author:</span> <%= book.author %>
-        
-       
+        <div class="book-details">
+          <span class="book-title">Book Title:</span> <%= book.title %>
+          <span class="author">Author:</span> <%= book.author %>
+        </div>
       </li>
-      <% }); %> <% } else { %>
-      <li>No books found</li>
-      <% } %>
-    </ul>
-    
+    <% }); %> 
+  <% } else { %>
+    <li>No books found</li>
+  <% } %>
+</ul>
+
+
 
     <script src="/js/main.js"></script>
   </body>

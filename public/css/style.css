@@ -199,24 +199,31 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 
 .book-list li {
 
-  width: 200px; 
-  height: 450px;
+  width: auto; 
+  height: auto;
   overflow: hidden;
   margin: 20px;
-  
+ 
 }
+  
+
+
 
 
 /* Styling for the book image */
 .book-list li img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
+  border-radius: 10px 10px 0 0;
   
-  border-radius: 10px 10px 0 0; /* Rounded corners only on the top */
+ 
   position: relative;
   
+  
 }
+
+
 .delete-form {
   display: inline-block;
 }
