@@ -40,7 +40,7 @@ client.connect()
 
 app.get('/', async (req, res) => {
   try {
-    const user_id = req.session.user_id; // Retrieve the user_id from the session
+    const user_id = req.session.user_id; 
     const dbData = await fetchDataFromDatabase(user_id);
     res.render('home.ejs', { user_id, dbData });
   } catch (error) {
@@ -104,7 +104,8 @@ app.post("/login", async (req, res) => {
 
         const dbData = await fetchDataFromDatabase(user_id);
         // console.log("Database Data,logIN:", dbData); // Add this line for debugging
-        res.render("books.ejs", { user_id, dbData, users });
+        res.render( "books.ejs", { user_id, dbData, users } );
+       
       } else {
         res.send("Incorrect Password");
       }
@@ -132,13 +133,17 @@ app.post('/logout', (req, res) => {
 app.post('/books', async (req, res) => {
   const { title, author, user_id } = req.body;
   try {
-    const bookData = await fetchBookData(title, author, user_id);
+    const bookData = await fetchBookData( title, author, user_id );
+    //  console.log("bookData_logIn",bookData)
     if (!bookData) {
       res.status(404).send('Book not found');
       return;
     }
     const thumbnailUrl = bookData.volumeInfo.imageLinks ? bookData.volumeInfo.imageLinks.thumbnail : null;
-    await client.query('INSERT INTO books (title, author, image_link, user_id) VALUES ($1, $2, $3, $4)', [title, author, thumbnailUrl, user_id]);
+    const descriptionBook = bookData.volumeInfo.description ? bookData.volumeInfo.description : '';
+
+        // console.log("Description:", descriptionBook);
+    await client.query('INSERT INTO books (title, author, image_link, user_id,description_book) VALUES ($1, $2, $3, $4,$5)', [title, author, thumbnailUrl, user_id,descriptionBook]);
     
     // Fetch the user's data including first_name from the database
     const userData = await client.query('SELECT first_name FROM users WHERE user_id = $1', [user_id]);

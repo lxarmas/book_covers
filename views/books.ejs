@@ -23,7 +23,7 @@
  <h2 class="countBook">You have read <span id="bookCount"><%= dbData.length %></span> books, keep up the good work, friend!</h2>
 
       
- <ul class="book-list">
+<ul class="book-list">
   <% if (dbData.length > 0) { %> 
     <% dbData.forEach(book => { %>
       <li class="book">
@@ -33,7 +33,7 @@
         </form>
         <div class="book-cover">
           <% if (book.image_link) { %>
-            <img src="<%= book.image_link %>" alt="Book Cover" />
+            <img src="<%= book.image_link %>" alt="Book Cover" class="book-image" />
           <% } else { %>
             <span class="error-message">Cover image not available</span>
           <% } %>
@@ -41,6 +41,9 @@
         <div class="book-details">
           <span class="book-title">Book Title:</span> <%= book.title %>
           <span class="author">Author:</span> <%= book.author %>
+          <div class="description-container" style="display: none;">
+            <span class="description"><%= book.description_book %></span>
+          </div>
         </div>
       </li>
     <% }); %> 
