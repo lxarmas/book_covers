@@ -72,14 +72,15 @@ body {
 
 .book-title {
   
-  color: rgb(0, 0, 0); 
+  color: rgb(29, 100, 47); 
    font-family: Arial, Helvetica, sans-serif;
+   display: block;
 }
 
 .author {
-  color: rgb(0, 0, 0);
+  color: rgb(29, 100, 47); 
   font-family: Arial, Helvetica, sans-serif;
-  display: block; /* Display the text as a block element */
+  display: block; 
   margin-left: 0; /* Reset any existing margin */
 }
 
@@ -199,15 +200,34 @@ button[type="submit"]:hover {
 background-color: rgb(40, 60, 68); /* Change background color on hover */
 }
 
+.book {
+   width: 200px;
+  display: flex; /* Use flexbox for layout */
+  margin-bottom: 20px; /* Add spacing between books */
+}
+
+.book-cover {
+  flex: 0 0 auto; /* Do not grow or shrink, maintain its initial size */
+  margin-right: 20px; /* Add spacing between cover and details */
+}
 
 .book-list {
  
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+ justify-content: space-around;
+  list-style-type: none;
+  background-color: #a8b9ba;
+}
+.book-details {
+  flex: 1; 
+}
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   list-style-type: none;
 }
-
 
 .book-list li {
 
@@ -216,7 +236,8 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
   overflow: hidden;
   margin: 20px;
  }
-  
+
+
 .book-list li img {
   width: 100%;
   height: auto;
@@ -227,7 +248,7 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 
 .description-container {
   display: none;
-  background-color: #f9f9f9; /* Light background color */
+  background-color: #99f1ba; /* Light background color */
   border: 1px solid #ccc; /* Soft border */
   border-radius: 5px; /* Rounded corners */
   padding: 10px; /* Padding for spacing */
@@ -239,18 +260,20 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 .description {
   margin: 0; /* Remove default margin */
   font-size: 14px; /* Adjust font size */
+  font-weight: bold;
   color: #333; /* Text color */
 }
 
 
 .delete-form {
   display: inline-block;
+
 }
 
 .deleteButton {
   background-color: transparent; /* Make the background transparent */
   border: none; /* Remove the border */
-  color: #65a27b; /* Change the text color */
+  color: #eaeaea; /* Change the text color */
   font-size: 14px; /* Adjust the font size */
   cursor: pointer; /* Change cursor to pointer */
   transition: color 0.3s ease; /* Add transition effect for color change */
