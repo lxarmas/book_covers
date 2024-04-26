@@ -1,8 +1,7 @@
 const express = require('express');
 const bodyParser = require( 'body-parser' );
-const session = require( 'express-session' ); // Import express-session
-const crypto = require('crypto'); // Import the crypto module
-
+const session = require( 'express-session' ); 
+const crypto = require('crypto'); 
 const axios = require('axios');
 const { Client } = require('pg');
 const path = require('path');
@@ -103,7 +102,7 @@ app.post("/login", async (req, res) => {
         const users = { first_name, last_name };
 
         const dbData = await fetchDataFromDatabase(user_id);
-        // console.log("Database Data,logIN:", dbData); // Add this line for debugging
+        console.log("Database Data,logIN:", dbData);
         res.render( "books.ejs", { user_id, dbData, users } );
        
       } else {
@@ -134,7 +133,7 @@ app.post('/books', async (req, res) => {
   const { title, author, user_id } = req.body;
   try {
     const bookData = await fetchBookData( title, author, user_id );
-    //  console.log("bookData_logIn",bookData)
+     console.log("bookData_logIn",bookData)
     if (!bookData) {
       res.status(404).send('Book not found');
       return;
@@ -142,7 +141,7 @@ app.post('/books', async (req, res) => {
     const thumbnailUrl = bookData.volumeInfo.imageLinks ? bookData.volumeInfo.imageLinks.thumbnail : null;
     const descriptionBook = bookData.volumeInfo.description ? bookData.volumeInfo.description : '';
 
-        // console.log("Description:", descriptionBook);
+    // console.log("Description:", descriptionBook);
     await client.query('INSERT INTO books (title, author, image_link, user_id,description_book) VALUES ($1, $2, $3, $4,$5)', [title, author, thumbnailUrl, user_id,descriptionBook]);
     
     // Fetch the user's data including first_name from the database
