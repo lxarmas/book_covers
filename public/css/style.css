@@ -270,10 +270,10 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
   background-color: #99f1ba; /* Light background color */
   border: 1px solid #ccc; /* Soft border */
   border-radius: 5px; /* Rounded corners */
-  padding: 10px; /* Padding for spacing */
+  padding: 25px; /* Padding for spacing */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft box shadow */
-  max-width: 300px; /* Limit width to avoid taking up too much space */
-  margin-top: 10px; /* Spacing from the book details */
+  max-width: 400px; /* Limit width to avoid taking up too much space */
+  margin-top: 3px; /* Spacing from the book details */
 }
 
 .description {
@@ -281,6 +281,12 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
   font-size: 14px; /* Adjust font size */
   font-weight: bold;
   color: #333; /* Text color */
+}
+
+.description-container.zoomed {
+  /* Zoom effect: increase scale */
+  transition: transform 3s ease; /* Smooth transition */
+  z-index: 1; /* Ensure it's above other elements */
 }
 
 
@@ -303,36 +309,11 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
   color: #333; /* Change text color on hover */
 }
 
-.rainbow-icon {
-  animation: colorChange 30s infinite alternate;
+.book-icon{
+  color:#04666e
 }
 
-@keyframes colorChange {
-  0% {
-    color: #158d6f; 
-  }
-  16.67% {
-    color: #6acdbc; /* Orange */
-  }
-  33.33% {
-    color: #085735; /* Yellow */
-  }
-  50% {
-    color: #b0e0c9; /* Green */
-  }
-  66.67% {
-    color: #2c493c; /* Blue */
-  }
-  83.33% {
-    color: #a6d1b8; /* Indigo */
-  }
-  100% {
-    color: #1b3828; /* Violet */
-  }
-}
-
- 
-    /* footer */
+/* footer */
     .text-mute{
       color: rgb(69, 115, 95);
     }

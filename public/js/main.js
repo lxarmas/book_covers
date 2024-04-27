@@ -59,14 +59,16 @@ function logout() {
     console.error('Logout failed:', error);
   });
 }
-
+//click on book for book_description
 document.addEventListener('DOMContentLoaded', function() {
   const bookImages = document.querySelectorAll('.book-image');
   
   bookImages.forEach(image => {
     image.addEventListener('click', function() {
-      const descriptionContainer = this.parentElement.nextElementSibling.querySelector('.description-container');
+      const descriptionContainer = this.parentElement.nextElementSibling.querySelector( '.description-container' );
       descriptionContainer.style.display = descriptionContainer.style.display === 'none' ? 'block' : 'none';
+        descriptionContainer.classList.toggle('zoomed');
+      
     });
   });
 });
