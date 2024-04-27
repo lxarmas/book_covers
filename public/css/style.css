@@ -95,6 +95,23 @@ body {
     font-family: Arial, sans-serif; /* Or any other modern font */
   }
 
+
+
+  .intro-home {
+    font-size: 45px;
+    margin-right: 30px;
+    left:20px;
+    padding: 40px;
+    text-align:left;
+    color: #08100a;
+   
+ 
+  
+  }
+
+
+
+
   .logout-button:hover {
     background-color: #04666e; /* Darker green */
   }
@@ -286,7 +303,33 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
   color: #333; /* Change text color on hover */
 }
 
+.rainbow-icon {
+  animation: colorChange 30s infinite alternate;
+}
 
+@keyframes colorChange {
+  0% {
+    color: #158d6f; 
+  }
+  16.67% {
+    color: #6acdbc; /* Orange */
+  }
+  33.33% {
+    color: #085735; /* Yellow */
+  }
+  50% {
+    color: #b0e0c9; /* Green */
+  }
+  66.67% {
+    color: #2c493c; /* Blue */
+  }
+  83.33% {
+    color: #a6d1b8; /* Indigo */
+  }
+  100% {
+    color: #1b3828; /* Violet */
+  }
+}
 
  
     /* footer */
