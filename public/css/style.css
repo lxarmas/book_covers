@@ -266,15 +266,19 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
 }
 
 .description-container {
+
   display: none;
-  background-color: #99f1ba; /* Light background color */
+  background-color: #e1e0e0; /* Light background color */
   border: 1px solid #ccc; /* Soft border */
   border-radius: 5px; /* Rounded corners */
   padding: 25px; /* Padding for spacing */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft box shadow */
   max-width: 400px; /* Limit width to avoid taking up too much space */
   margin-top: 3px; /* Spacing from the book details */
+   opacity: 0; /* Initially hide the description container */
+  
 }
+
 
 .description {
   margin: 0; /* Remove default margin */
@@ -282,12 +286,11 @@ background-color: rgb(40, 60, 68); /* Change background color on hover */
   font-weight: bold;
   color: #333; /* Text color */
 }
-
 .description-container.zoomed {
-  /* Zoom effect: increase scale */
-  transition: transform 3s ease; /* Smooth transition */
-  z-index: 1; /* Ensure it's above other elements */
+ transition: transform 10s ease, opacity 0.3s ease; /* Smooth transition for both scale and opacity */
+  opacity: 1; /* Ensure the description container is fully visible */
 }
+
 
 
 .delete-form {

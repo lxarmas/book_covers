@@ -39,15 +39,16 @@
           <% } %>
         </div>
       <div class="book-details">
-  <span class="book-title">Book Title:</span> <%= book.title %>
-  <span class="author">Author:</span> <%= book.author %>
-  <div class="description-container" style="display: none;">
+         <div class="description-container" style="display: none;">
     <% if (book.description_book.trim() !== '') { %>
       <span class="description"><%= book.description_book %></span>
     <% } else { %>
       <span class="description">Worthy Reads apologizes, no information about this book at the moment</span>
     <% } %>
   </div>
+  <span class="book-title">Book Title:</span> <%= book.title %>
+  <span class="author">Author:</span> <%= book.author %>
+ 
 </div>
 
           
